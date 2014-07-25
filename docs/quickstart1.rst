@@ -203,8 +203,18 @@ We now have a fresh install of Ubuntu.  Let's install the tools we need for Secu
 
     $ sudo apt-get install python-pip python-dev python-psycopg2 postgresql postgresql-contrib libpq-dev nginx supervisor git
 
+.. note::
+    On RHEL based distributions:
+
+    $ sudo yum --enablerepo=epel install python-pip python-devel python-psycopg2 postgresql postgresql-contrib postgresql-devel postgresql-server nginx supervisor git gcc
+
 Setup Postgres
 --------------
+
+.. note::
+    On RHEL based distribution, user should be in the `wheel` group, group should be enabled in sudoers and postgresql has to be initialized and started:
+        $ sudo sed -i -e 's/# %wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+        $sudo service postgresql initdb && sudo service postgresql start
 
 For production, you will want to use an AWS RDS Postgres database.  For this guide, we will setup a database on the instance that was just launched.
 
