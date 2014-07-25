@@ -203,22 +203,31 @@ We now have a fresh install of Ubuntu.  Let's install the tools we need for Secu
 
     $ sudo apt-get install python-pip python-dev python-psycopg2 postgresql postgresql-contrib libpq-dev nginx supervisor git
 
-.. note::
-    On RHEL based distributions:
+**Note**
+
+On RHEL based distributions (if **not** using `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ or `CentOS <https://www.centos.org/>`_, *--enablerepo=epel* can be removed):
+
+.. code-block:: sh
 
     $ sudo yum --enablerepo=epel install python-pip python-devel python-psycopg2 postgresql postgresql-contrib postgresql-devel postgresql-server nginx supervisor git gcc
 
 Setup Postgres
 --------------
 
-.. note::
-    On RHEL based distribution, user should be in the `wheel` group, group should be enabled in sudoers and postgresql has to be initialized and started:
-        $ sudo sed -i -e 's/# %wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
-        $sudo service postgresql initdb && sudo service postgresql start
-
 For production, you will want to use an AWS RDS Postgres database.  For this guide, we will setup a database on the instance that was just launched.
 
+**Note**
+    
+On RHEL based distributions for below to work current user should be in the `wheel` group, `wheel` group should be enabled in sudoers and postgresql has to be initialized and started.
+
+.. code-block:: sh
+
+    $ sudo sed -i -e 's/# %wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+    $ sudo service postgresql initdb && sudo service postgresql start
+
+
 First, set a password for the postgres user.  For this guide, we will use **securitymonkeypassword**.
+
 
     $ sudo -u postgres psql postgres
 
