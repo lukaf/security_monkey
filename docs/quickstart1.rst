@@ -222,7 +222,7 @@ On RHEL based distributions for below to work current user should be in the `whe
 
 .. code-block:: sh
 
-    $ sudo sed -i -e 's/# %wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+    $ sudo sed -i -e 's/#.*%wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
     $ sudo service postgresql initdb && sudo service postgresql start
 
 
