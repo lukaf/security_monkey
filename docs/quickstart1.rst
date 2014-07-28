@@ -223,7 +223,7 @@ On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ for below to work 
 
 .. code-block:: sh
 
-    $ sudo sed -i -e 's/# %wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
+    $ sudo sed -i -e 's/#.*%wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
     $ sudo service postgresql initdb && sudo service postgresql start
 
 
