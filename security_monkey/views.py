@@ -31,11 +31,11 @@ from flask.ext.login import current_user, logout_user
 from security_monkey.decorators import crossdomain
 
 ORIGINS = [
-    'https://{}:{}'.format(app.config.get('FQDN'), app.config.get('WEB_PORT')),
+    'https://{0}:{1}'.format(app.config.get('FQDN'), app.config.get('WEB_PORT')),
     # Adding this next one so you can also access the dart UI by prepending /static to the path.
-    'https://{}:{}'.format(app.config.get('FQDN'), app.config.get('API_PORT')),
-    'https://{}:{}'.format(app.config.get('FQDN'), app.config.get('NGINX_PORT')),
-    'https://{}:80'.format(app.config.get('FQDN')),
+    'https://{0}:{1}'.format(app.config.get('FQDN'), app.config.get('API_PORT')),
+    'https://{0}:{1}'.format(app.config.get('FQDN'), app.config.get('NGINX_PORT')),
+    'https://{0}:80'.format(app.config.get('FQDN')),
     # FOR LOCAL DEV IN DART EDITOR:
     'http://127.0.0.1:3030'
 ]

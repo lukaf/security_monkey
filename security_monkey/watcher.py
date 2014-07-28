@@ -121,8 +121,8 @@ class Watcher(object):
         Find any items that have been deleted since the last run of the watcher.
         Add these items to the deleted_items list.
         """
-        prev_map = {item.location(): item for item in previous}
-        curr_map = {item.location(): item for item in current}
+        prev_map = dict((item.location(), item) for item in previous)
+        curr_map = dict((item.location(), item) for item in current)
 
         item_locations = list(Set(prev_map).difference(Set(curr_map)))
         item_locations = [item_location for item_location in item_locations if not self.locationInExceptionMap(item_location, exception_map)]
@@ -138,8 +138,8 @@ class Watcher(object):
         Find any new objects that have been created since the last run of the watcher.
         Add these items to the created_items list.
         """
-        prev_map = {item.location(): item for item in previous}
-        curr_map = {item.location(): item for item in current}
+        prev_map = dict((item.location(), item) for item in previous)
+        curr_map = dict((item.location(), item) for item in current)
 
         item_locations = list(Set(curr_map).difference(Set(prev_map)))
         list_new_items = [curr_map[item] for item in item_locations]
@@ -154,8 +154,8 @@ class Watcher(object):
         Find any objects that have been changed since the last run of the watcher.
         Add these items to the changed_items list.
         """
-        prev_map = {item.location(): item for item in previous}
-        curr_map = {item.location(): item for item in current}
+        prev_map = dict((item.location(), item) for item in previous)
+        curr_map = dict((item.location(), item) for item in current)
 
         item_locations = list(Set(curr_map).intersection(Set(prev_map)))
         item_locations = [item_location for item_location in item_locations if not self.locationInExceptionMap(item_location, exception_map)]
