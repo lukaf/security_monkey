@@ -210,6 +210,7 @@ On RHEL based distributions (if **not** using `Amazon Linux <https://aws.amazon.
 .. code-block:: sh
 
     $ sudo yum --enablerepo=epel install python-pip python-devel python-psycopg2 postgresql postgresql-contrib postgresql-devel postgresql-server nginx supervisor git gcc
+    $ sudo pip install --upgrade six
 
 Setup Postgres
 --------------
