@@ -205,7 +205,7 @@ We now have a fresh install of Ubuntu.  Let's install the tools we need for Secu
 
 **Note**
 
-On RHEL based distributions (if **not** using `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ or `CentOS <https://www.centos.org/>`_, *--enablerepo=epel* can be removed):
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
 
 .. code-block:: sh
 
@@ -219,7 +219,7 @@ For production, you will want to use an AWS RDS Postgres database.  For this gui
 
 **Note**
     
-On RHEL based distributions for below to work current user should be in the `wheel` group, `wheel` group should be enabled in sudoers and postgresql has to be initialized and started.
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ for below to work current user should be in the `wheel` group, `wheel` group should be enabled in sudoers and postgresql has to be initialized and started.
 
 .. code-block:: sh
 
@@ -243,6 +243,22 @@ Type CTRL-D to exit psql once you have changed the password.
 Next, we will create our a new database:
 
     $ sudo -u postgres createdb secmonkey
+
+**Note**
+
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ PostgreSQL authentication defaults to **ident**. As Security Monkey uses password based authentication, **pg\_hba.conf** has to be modified to look like this (**md5** instead of **ident**):
+
+.. code-block:: sh
+
+    # TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+    # "local" is for Unix domain socket connections only
+    local   all             all                                     peer
+    # IPv4 local connections:
+    host    all             all             127.0.0.1/32            md5
+    # IPv6 local connections:
+    host    all             all             ::1/128                 md5
+
 
 Clone the Security Monkey Repo
 ==============================
