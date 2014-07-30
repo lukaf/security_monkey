@@ -209,7 +209,8 @@ On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
 
 .. code-block:: sh
 
-    $ sudo yum --enablerepo=epel install python-pip python-devel python-psycopg2 postgresql postgresql-contrib postgresql-devel postgresql-server nginx supervisor git gcc
+    $ sudo yum --enablerepo=epel install python-pip python-devel postgresql postgresql-contrib postgresql-devel postgresql-server nginx git gcc
+    $ sudo pip install supervisor psycopg2
     $ sudo pip install --upgrade six
 
 Setup Postgres
