@@ -155,8 +155,8 @@ You will also need to add the new account in the Web UI, and restart the schedul
 
 Document how to setup an SES account and validate it.
 
-Launch an Ubuntu Instance
-=========================
+Launch an Ubuntu or an Amazon Linux Instance
+============================================
 
 Netflix monitors dozens AWS accounts easily on a single m3.large instance.  For this guide, we will launch a m1.small.
 
@@ -194,6 +194,14 @@ We will connect to the new instance over ssh:
 
     $ ssh -i SecurityMonkeyKeyPair.pem -l ubuntu ec2-XX-XXX-XXX-XXX.compute-1.amazonaws.com
 
+**Note**
+
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
+
+.. code-block:: bash
+
+    $ ssh -i SecurityMonkeyKeyPair.pem -l ec2-user ec2-XX-XXX-XXX-XXX.compute-1.amazonaws.com
+
 Replace the last parameter (ec2-XX-XXX-XXX-XXX...) with the DNS entry of your instance.
 
 Install Pre-requisites
@@ -207,7 +215,7 @@ We now have a fresh install of Ubuntu.  Let's install the tools we need for Secu
 
 On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
 
-.. code-block:: sh
+.. code-block:: bash
 
     $ sudo yum --enablerepo=epel install python-pip python-devel postgresql postgresql-contrib postgresql-devel postgresql-server nginx git gcc
     $ sudo pip install supervisor psycopg2
@@ -222,7 +230,7 @@ For production, you will want to use an AWS RDS Postgres database.  For this gui
     
 On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ for below to work current user should be in the `wheel` group, `wheel` group should be enabled in sudoers and postgresql has to be initialized and started.
 
-.. code-block:: sh
+.. code-block:: bash
 
     $ sudo sed -i -e 's/#.*%wheel.*NOPASS.*/%wheel ALL=(ALL) NOPASSWD: ALL/' /etc/sudoers
     $ sudo service postgresql initdb && sudo service postgresql start
@@ -249,7 +257,7 @@ Next, we will create our a new database:
 
 On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_ PostgreSQL authentication defaults to **ident**. As Security Monkey uses password based authentication, **pg\_hba.conf** has to be modified to look like this (**md5** instead of **ident**):
 
-.. code-block:: sh
+.. code-block:: bash
 
     # TYPE  DATABASE        USER            ADDRESS                 METHOD
 
@@ -410,6 +418,16 @@ The last commands you need to run from that tutorial are in the "Installing the 
     sudo cp server.crt /etc/ssl/certs
     sudo cp server.key /etc/ssl/private
 
+**Note**
+
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
+
+    /etc/ssl/private directory has to be created:
+
+.. code-block:: bash
+
+    $ sudo mkdir -p /etc/ssl/private
+
 Once you have finished the instructions at the link above, and these two files are in your /etc/ssl/certs and /etc/ssl/private, you are ready to move on in this guide.
 
 Setup Nginx:
@@ -433,6 +451,15 @@ securitymonkey.conf
 Save the config file below to:
 
     /etc/nginx/sites-available/securitymonkey.conf
+
+
+**Note**
+
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
+
+    /etc/nginx/conf.d/securitymonkey.conf
+
+    And in the main Nginx configuration (**/etc/nginx/nginx.conf**) user under which Nginx runs has to be changed from **nginx** to **root** otherwise Nginx will not be able to access files under your home directory.
 
 .. code-block:: nginx
 
@@ -499,6 +526,12 @@ Save the config file below to:
         }
 
     }
+
+**Note**
+
+On `Amazon Linux <https://aws.amazon.com/amazon-linux-ami/>`_:
+
+    No symlinking is needed.
 
 Symlink the sites-available file to the sites-enabled folder:
 
